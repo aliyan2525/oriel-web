@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
-import { Scene3D } from "@/components/scene-3d";
+import { HeroArt } from "@/components/hero-art";
 import { WaitlistForm } from "@/components/waitlist-form";
 
 const problems = [
@@ -41,7 +41,7 @@ export default function HomePage() {
             </div>
           </Reveal>
           <Reveal delay={150} className="hero-visual">
-            <Scene3D />
+            <HeroArt />
           </Reveal>
         </div>
       </section>

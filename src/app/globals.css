@@ -82,7 +82,6 @@ a { color: var(--indigo); }
 .hero-grid { display: grid; gap: 3rem; align-items: center; }
 @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.1fr 0.9fr; } }
 .hero-visual { display: grid; place-items: center; }
-.hero-visual .mark { width: min(320px, 70vw); height: auto; }
 .eyebrow { margin-bottom: 1rem; color: var(--indigo); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
 .lead { max-width: 36rem; margin-top: 1.25rem; font-size: 1.1875rem; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
@@ -152,7 +151,7 @@ a { color: var(--indigo); }
 }
 
 /* ==========================================================================
-   Upgrade: motion, 3D scene, mobile navigation, product mock, retention
+   Upgrade: motion, hero art, mobile navigation, product mock, retention
    ========================================================================== */
 
 a,
@@ -164,26 +163,6 @@ summary { touch-action: manipulation; -webkit-tap-highlight-color: transparent; 
 /* Scroll reveal: hidden only after JavaScript confirms the element is below the fold. */
 .reveal-pending { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .reveal-pending.is-revealed { opacity: 1; transform: none; }
-
-/* 3D scene: rotating cube, orbiting agents, tilted ring. Transforms only, so it stays on the GPU. */
-.scene { position: relative; width: min(340px, 86vw); aspect-ratio: 1; perspective: 1000px; margin-inline: auto; }
-.scene-ring,
-.scene-orbit,
-.scene-cube { position: absolute; inset: 0; transform-style: preserve-3d; }
-.scene-ring { border: 1px dashed rgb(83 74 183 / 0.35); border-radius: 50%; transform: rotateX(72deg); }
-.scene-orbit { animation: orbit-spin 16s linear infinite; will-change: transform; }
-.scene-orb { position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -8px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff6e0, #ef9f27 55%, #ba7517); box-shadow: 0 0 22px rgb(239 159 39 / 0.55); transform: rotateY(var(--angle)) translateZ(170px); }
-.scene-cube { width: 150px; height: 150px; margin: auto; animation: cube-spin 22s linear infinite; will-change: transform; }
-.cube-face { position: absolute; inset: 0; border: 1.5px solid rgb(83 74 183 / 0.55); border-radius: 14px; background: linear-gradient(145deg, rgb(255 255 255 / 0.85), rgb(238 237 254 / 0.6)); }
-.cube-face--front { border-radius: 75px 75px 14px 14px; transform: translateZ(75px); }
-.cube-face--front::after { content: ""; position: absolute; left: 50%; top: 58%; width: 14px; height: 14px; margin: -7px; border-radius: 50%; background: #ef9f27; box-shadow: 0 0 14px rgb(239 159 39 / 0.6); }
-.cube-face--back { transform: rotateY(180deg) translateZ(75px); }
-.cube-face--right { transform: rotateY(90deg) translateZ(75px); }
-.cube-face--left { transform: rotateY(-90deg) translateZ(75px); }
-.cube-face--top { transform: rotateX(90deg) translateZ(75px); }
-.cube-face--bottom { transform: rotateX(-90deg) translateZ(75px); }
-@keyframes orbit-spin { from { transform: rotateX(-12deg) rotateY(0deg); } to { transform: rotateX(-12deg) rotateY(360deg); } }
-@keyframes cube-spin { from { transform: rotateX(-16deg) rotateY(0deg); } to { transform: rotateX(-16deg) rotateY(360deg); } }
 
 /* Two-column layout and the illustrative plan thread */
 .split { display: grid; gap: 2.5rem; align-items: center; }
@@ -245,3 +224,64 @@ summary { touch-action: manipulation; -webkit-tap-highlight-color: transparent; 
 @media (min-width: 768px) {
   .mobile-cta { display: none; }
 }
+
+/* ==========================================================================
+   Hero: the Oriel. A glass bay window holding a live plan thread.
+   Transforms and opacity only. Motion is gated behind reduced-motion checks.
+   ========================================================================== */
+.hero-art { position: relative; isolation: isolate; width: min(300px, 78vw); aspect-ratio: 300 / 380; margin-inline: auto; perspective: 1200px; }
+.aurora { position: absolute; inset: -22% -30%; z-index: -1; pointer-events: none; }
+.aurora-blob { position: absolute; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, var(--c) 0%, rgb(255 255 255 / 0) 68%); }
+.aurora-blob--indigo { --c: rgb(83 74 183 / 0.5); width: 62%; left: 2%; top: 6%; }
+.aurora-blob--lilac { --c: rgb(206 203 246 / 0.85); width: 64%; left: 28%; top: 38%; }
+.aurora-blob--amber { --c: rgb(239 159 39 / 0.38); width: 46%; right: 4%; bottom: 4%; }
+.oriel-tilt { position: absolute; inset: 0; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); will-change: transform; }
+.oriel-float { position: absolute; inset: 0; }
+.oriel-frame { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.oriel-frame path { fill: none; stroke: var(--indigo); stroke-linecap: round; }
+.oriel-frame .frame-arch { stroke-width: 1.5; opacity: 0.6; }
+.oriel-frame .frame-sill { stroke-width: 2.5; opacity: 0.85; }
+.oriel-glass { position: absolute; inset: 0; display: grid; grid-template-rows: auto 1fr auto; gap: 0.875rem; padding: 2.6rem 1.25rem 1.125rem; overflow: hidden; border-radius: 150px 150px 26px 26px; border: 1.5px solid rgb(83 74 183 / 0.22); background: linear-gradient(170deg, rgb(255 255 255 / 0.97), rgb(238 237 254 / 0.86)); box-shadow: inset 0 1px 0 #fff, 0 44px 70px -40px rgb(38 33 92 / 0.6); }
+.oriel-head { display: grid; justify-items: center; gap: 0.2rem; text-align: center; }
+.oriel-title { color: var(--night); font-size: 0.9375rem; font-weight: 600; }
+.oriel-sub { color: var(--indigo-deep); font-size: 0.6875rem; }
+.oriel-thread { display: grid; align-content: start; gap: 0.5rem; }
+.oriel-msg { max-width: 86%; padding: 0.55rem 0.75rem; border-radius: 14px; background: var(--mist); color: var(--night); font-size: 0.8125rem; line-height: 1.4; }
+.oriel-msg--you { justify-self: end; background: var(--indigo); color: #fff; }
+.oriel-approval { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.6rem 0.7rem; border: 1px solid rgb(239 159 39 / 0.6); border-radius: 16px; background: #fffaf0; }
+.oriel-approval-text { color: var(--night); font-size: 0.75rem; font-weight: 600; }
+.oriel-approve { padding: 0.4rem 0.75rem; border-radius: 10px; background: var(--indigo); color: #fff; font-size: 0.75rem; font-weight: 600; }
+.oriel-sheen { position: absolute; top: -10%; bottom: -10%; left: 0; width: 40%; background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.75), transparent); transform: skewX(-18deg); pointer-events: none; }
+.chip { position: absolute; z-index: 2; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.8rem; border: 1px solid var(--lilac); border-radius: 999px; background: rgb(255 255 255 / 0.94); box-shadow: 0 14px 26px -14px rgb(38 33 92 / 0.45); color: var(--night); font-size: 0.8125rem; font-weight: 600; white-space: nowrap; }
+.chip::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--indigo); box-shadow: 0 0 0 4px rgb(83 74 183 / 0.15); }
+.chip--amber::before { background: var(--amber); box-shadow: 0 0 0 4px rgb(239 159 39 / 0.2); }
+.chip--1 { top: 9%; left: -10%; }
+.chip--2 { top: 47%; right: -12%; }
+.chip--3 { bottom: -5%; left: 8%; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .oriel-float { animation: float 7s ease-in-out infinite; }
+  .oriel-frame .frame-arch { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw-arch 1.8s cubic-bezier(0.6, 0.1, 0.2, 1) 0.2s forwards; }
+  .oriel-sheen { animation: sheen 6s ease-in-out 1.6s infinite; }
+  .oriel-msg,
+  .oriel-approval { opacity: 0; animation: msg-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+  .oriel-msg:nth-child(1) { animation-delay: 0.5s; }
+  .oriel-msg:nth-child(2) { animation-delay: 1.05s; }
+  .oriel-msg:nth-child(3) { animation-delay: 1.6s; }
+  .oriel-approval { animation-delay: 2.2s; }
+  .oriel-approve { animation: approve-pulse 2.8s ease-out 3s infinite; }
+  .aurora-blob--indigo { animation: drift-a 16s ease-in-out infinite; }
+  .aurora-blob--lilac { animation: drift-b 20s ease-in-out infinite; }
+  .aurora-blob--amber { animation: drift-c 18s ease-in-out infinite; }
+  .chip--1 { animation: chip-float 6.5s ease-in-out infinite; }
+  .chip--2 { animation: chip-float 7.5s ease-in-out -2s infinite; }
+  .chip--3 { animation: chip-float 8s ease-in-out -4s infinite; }
+}
+@keyframes float { 50% { transform: translateY(-8px); } }
+@keyframes draw-arch { to { stroke-dashoffset: 0; } }
+@keyframes sheen { 0%, 50% { transform: skewX(-18deg) translateX(-130%); } 100% { transform: skewX(-18deg) translateX(330%); } }
+@keyframes approve-pulse { 0% { box-shadow: 0 0 0 0 rgb(83 74 183 / 0.45); } 70%, 100% { box-shadow: 0 0 0 10px rgb(83 74 183 / 0); } }
+@keyframes drift-a { 50% { transform: translate(6%, 8%) scale(1.06); } }
+@keyframes drift-b { 50% { transform: translate(-7%, -5%) scale(0.94); } }
+@keyframes drift-c { 50% { transform: translate(4%, -8%) scale(1.04); } }
+@keyframes chip-float { 50% { transform: translateY(-7px); } }
