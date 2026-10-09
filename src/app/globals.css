@@ -362,3 +362,37 @@ p, li, h1, h2, h3, a { overflow-wrap: break-word; }
 
 /* mobile-native: the tap highlight comes off at the root, so every tappable element owns its feedback */
 html { -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; }
+
+/* ==========================================================================
+   App shell: signed-in product area. The marketing header, footer, and mobile bar step aside.
+   ========================================================================== */
+body:has(.app-shell) .site-header,
+body:has(.app-shell) .site-footer,
+body:has(.app-shell) .mobile-cta { display: none; }
+body:has(.app-shell) { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.app-shell { min-height: 100vh; min-height: 100svh; }
+.app-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 64px; border-bottom: 1px solid var(--lilac); }
+.app-main { padding: 2rem 0 4rem; }
+.app-title { font-size: clamp(1.75rem, 4vw, 2.5rem); letter-spacing: -0.03em; color: var(--night); }
+.app-subtitle { font-size: 1.25rem; color: var(--night); }
+.app-section { display: grid; gap: 1.5rem; }
+.app-stack { display: grid; gap: 0.75rem; align-content: start; }
+.inline-form { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; }
+.inline-form .field { flex: 1 1 14rem; }
+.room-list { display: grid; gap: 0.75rem; margin: 0; padding: 0; list-style: none; }
+.room-card { display: flex; justify-content: space-between; align-items: center; gap: 1rem; color: var(--graphite); text-decoration: none; }
+.room-name { color: var(--night); font-weight: 600; }
+.room-meta { font-size: 0.875rem; }
+.room-layout { display: grid; gap: 1.5rem; }
+@media (min-width: 900px) { .room-layout { grid-template-columns: 1.6fr 1fr; } }
+.thread { display: grid; gap: 0.625rem; max-height: 60vh; margin: 0; padding: 0; list-style: none; overflow-y: auto; }
+.msg { padding: 0.625rem 0.875rem; background: var(--white); border: 1px solid var(--lilac); border-radius: 16px; }
+.msg-author { display: block; font-size: 0.8125rem; font-weight: 600; color: var(--indigo-deep); }
+.msg p { color: var(--night); overflow-wrap: anywhere; }
+.composer { display: grid; grid-template-columns: 1fr auto; gap: 0.75rem; align-items: end; }
+.composer textarea { width: 100%; min-height: 44px; padding: 0.625rem 0.875rem; font: inherit; font-size: 1rem; color: var(--graphite); background: var(--white); border: 1px solid var(--lilac); border-radius: var(--radius-control); resize: vertical; }
+.trust-row { display: grid; gap: 0.5rem; padding: 0.875rem 1rem; background: var(--white); border: 1px solid var(--lilac); border-radius: 16px; }
+.trust-row form { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.app-select { min-height: 44px; padding: 0.5rem 0.75rem; font: inherit; font-size: 1rem; color: var(--graphite); background: var(--white); border: 1px solid var(--lilac); border-radius: var(--radius-control); }
+.invite { font-size: 0.9375rem; }
+.invite code { overflow-wrap: anywhere; color: var(--night); }
