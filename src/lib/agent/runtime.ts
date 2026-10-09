@@ -157,12 +157,15 @@ async function replyAsAgent(
     .order("created_at", { ascending: false })
     .limit(20);
   const agentNames = new Map(agents.map((a) => [a.id, a.name]));
-  const transcript = (recentRows ?? [])
-    .reverse()
-    .map((m: { body: string; author_agent_id: string | null; profiles: { display_name: string } | null }) => ({
-      author: m.author_agent_id ? agentNames.get(m.author_agent_id) ?? "Agent" : m.profiles?.display_name ?? "Member",
-      body: m.body,
-    }));
+  const rows = (recentRows ?? []) as unknown as {
+    body: string;
+    author_agent_id: string | null;
+    profiles: { display_name: string } | null;
+  }[];
+  const transcript = rows.reverse().map((m) => ({
+    author: m.author_agent_id ? agentNames.get(m.author_agent_id) ?? "Agent" : m.profiles?.display_name ?? "Member",
+    body: m.body,
+  }));
 
   const apiKey = openKey(payer as unknown as Sealed);
   const result = await runTurn(
