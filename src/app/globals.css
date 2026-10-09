@@ -414,3 +414,85 @@ body:has(.app-shell) { padding-bottom: env(safe-area-inset-bottom, 0px); }
 .email-fallback { margin-top: 1rem; }
 .email-fallback summary { cursor: pointer; color: var(--indigo-deep); font-weight: 600; }
 .email-fallback .waitlist-form { margin-top: 1rem; }
+
+/* ==========================================================================
+   Design pass: depth, glass surfaces, bento grid, ticker, micro-interactions.
+   Hover effects are gated to real pointers. Motion is off under reduced motion.
+   ========================================================================== */
+body {
+  background:
+    radial-gradient(900px 540px at 0% -8%, rgb(83 74 183 / 0.12), transparent 60%),
+    radial-gradient(760px 480px at 100% 0%, rgb(239 159 39 / 0.10), transparent 55%),
+    var(--paper);
+  background-attachment: scroll;
+}
+.hero { position: relative; isolation: isolate; }
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(rgb(83 74 183 / 0.07) 1px, transparent 1px), linear-gradient(90deg, rgb(83 74 183 / 0.07) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse at 30% 25%, #000 0%, transparent 70%);
+  mask-image: radial-gradient(ellipse at 30% 25%, #000 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 30; transform-origin: 0 50%; transform: scaleX(var(--scroll, 0)); background: linear-gradient(90deg, var(--indigo), var(--amber)); pointer-events: none; }
+
+.badge { display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; padding: 0.4rem 0.8rem; border: 1px solid var(--lilac); border-radius: 999px; background: rgb(255 255 255 / 0.7); backdrop-filter: blur(8px); color: var(--indigo-deep); font-size: 0.8125rem; font-weight: 600; }
+.badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal-text); }
+@media (prefers-reduced-motion: no-preference) { .badge-dot { animation: pulse-dot 2.2s ease-out infinite; } }
+@keyframes pulse-dot { 0% { box-shadow: 0 0 0 0 rgb(15 110 86 / 0.55); } 70%, 100% { box-shadow: 0 0 0 9px rgb(15 110 86 / 0); } }
+
+.kicker { display: inline-block; margin-bottom: 0.9rem; color: var(--indigo); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+
+.button-primary { position: relative; overflow: hidden; background: linear-gradient(135deg, #6258cc, var(--indigo) 55%, #4a41a8); box-shadow: 0 12px 26px -14px rgb(83 74 183 / 0.8), inset 0 1px 0 rgb(255 255 255 / 0.25); }
+.button-primary::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 0.35) 50%, transparent 65%); transform: translateX(-120%); transition: transform 0.75s cubic-bezier(0.2, 0.7, 0.2, 1); pointer-events: none; }
+@media (hover: hover) and (pointer: fine) {
+  .button-primary:hover::after { transform: translateX(120%); }
+  .button-primary:hover { box-shadow: 0 16px 30px -14px rgb(83 74 183 / 0.9), inset 0 1px 0 rgb(255 255 255 / 0.25); }
+  .button-secondary:hover { background: rgb(255 255 255 / 0.8); }
+}
+.button-secondary { background: rgb(255 255 255 / 0.6); backdrop-filter: blur(8px); }
+.button-light { color: #fff; border-color: rgb(255 255 255 / 0.35); background: rgb(255 255 255 / 0.08); }
+.button-light:hover { border-color: #fff; background: rgb(255 255 255 / 0.16); }
+
+.nav-links a { position: relative; }
+.nav-links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--indigo), var(--amber)); transform: scaleX(0); transform-origin: left; transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
+@media (hover: hover) and (pointer: fine) { .nav-links a:hover::after { transform: scaleX(1); } }
+.site-header { background: rgb(246 245 240 / 0.78); backdrop-filter: blur(14px) saturate(1.4); border-bottom-color: rgb(206 203 246 / 0.6); }
+
+.marquee { position: relative; overflow: hidden; margin-block: 1rem; padding: 0.25rem 0; border-block: 1px solid var(--lilac); background: rgb(255 255 255 / 0.55); -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.marquee-track { display: flex; gap: 3rem; width: max-content; padding: 1.25rem 0; }
+.marquee-track span { font-size: 1.125rem; font-weight: 600; letter-spacing: -0.01em; color: var(--night); white-space: nowrap; }
+.marquee-track span::before { content: "✦"; margin-right: 3rem; color: var(--amber); }
+@media (prefers-reduced-motion: no-preference) { .marquee-track { animation: marquee 38s linear infinite; } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+.bento { display: grid; gap: 1rem; margin-top: 2.5rem; }
+@media (min-width: 900px) { .bento { grid-template-columns: repeat(6, 1fr); } .span-4 { grid-column: span 4; } .span-2 { grid-column: span 2; } }
+.tile-wrap { display: flex; }
+.tile { position: relative; flex: 1; overflow: hidden; display: grid; align-content: start; gap: 0.75rem; padding: 1.75rem; border: 1px solid rgb(206 203 246 / 0.7); border-radius: 24px; background: rgb(255 255 255 / 0.72); backdrop-filter: blur(10px); box-shadow: 0 1px 0 rgb(255 255 255 / 0.8) inset, 0 24px 48px -36px rgb(38 33 92 / 0.45); transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.tile h3 { font-size: 1.3125rem; }
+.tile p { color: var(--graphite); }
+.tile-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px; color: var(--indigo); background: linear-gradient(135deg, #fff, var(--mist)); box-shadow: inset 0 0 0 1px rgb(83 74 183 / 0.15); }
+@media (hover: hover) and (pointer: fine) { .tile:hover { transform: translateY(-5px); box-shadow: 0 1px 0 rgb(255 255 255 / 0.8) inset, 0 34px 60px -30px rgb(38 33 92 / 0.45); } }
+
+/* Spotlight: a soft light that follows the pointer across any .spot surface */
+.spot { position: relative; overflow: hidden; isolation: isolate; }
+.spot::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(83 74 183 / 0.14), transparent 62%); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) { .spot:hover::before { opacity: 1; } }
+
+.chapter { position: relative; }
+.chapter--alt { background: rgb(255 255 255 / 0.55); backdrop-filter: blur(6px); }
+.scope-row, .decision { transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.45s ease; }
+@media (hover: hover) and (pointer: fine) { .scope-row:hover, .decision:hover { transform: translateX(4px); box-shadow: 0 18px 36px -26px rgb(38 33 92 / 0.5); } }
+
+.closing { padding: clamp(4rem, 10vw, 7rem) 0; }
+.closing-card { padding: clamp(2.25rem, 7vw, 4.5rem); border-radius: 32px; background: radial-gradient(700px 360px at 90% 0%, rgb(239 159 39 / 0.25), transparent 60%), linear-gradient(135deg, #1f1a52, #3c3489 55%, #534ab7); box-shadow: 0 40px 80px -40px rgb(38 33 92 / 0.7); }
+.closing-card .display, .closing-card .w { color: #fff; }
+.closing-card .chapter-body { color: rgb(255 255 255 / 0.82); }
+.closing-card .button-primary { background: #fff; color: var(--night); box-shadow: 0 14px 30px -16px rgb(0 0 0 / 0.5); }
+.closing-card .button-primary::after { background: linear-gradient(110deg, transparent 35%, rgb(83 74 183 / 0.18) 50%, transparent 65%); }

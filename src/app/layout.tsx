@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { Effects } from "@/components/effects";
 import { site } from "@/lib/site";
 
 const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <a className="skip-link" href="#main">
           Skip to content
         </a>
+        <Effects />
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
