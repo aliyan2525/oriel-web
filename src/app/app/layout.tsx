@@ -6,7 +6,8 @@ import { signOut } from "./actions";
 
 /** Pick a display name: the account's name if set, otherwise the part of the email before the @. */
 function displayNameFor(email: string | undefined, metadata: Record<string, unknown> | undefined): string {
-  const name = typeof metadata?.name === "string" ? metadata.name.trim() : "";
+  const fromProvider = [metadata?.full_name, metadata?.name].find((v): v is string => typeof v === "string" && v.trim() !== "");
+  const name = fromProvider?.trim() ?? "";
   const fallback = (email?.split("@")[0] ?? "").trim();
   return (name || fallback || "Member").slice(0, 60);
 }

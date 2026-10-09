@@ -408,3 +408,9 @@ body:has(.app-shell) { padding-bottom: env(safe-area-inset-bottom, 0px); }
 .cap-form .app-select { flex: 1 1 10rem; }
 .settings-form { max-width: 36rem; }
 .room-layout textarea { width: 100%; padding: 0.625rem 0.875rem; font: inherit; font-size: 1rem; color: var(--graphite); background: var(--white); border: 1px solid var(--lilac); border-radius: var(--radius-control); }
+
+/* Sign-in page: Google first, email as a fallback */
+.google-button { width: 100%; }
+.email-fallback { margin-top: 1rem; }
+.email-fallback summary { cursor: pointer; color: var(--indigo-deep); font-weight: 600; }
+.email-fallback .waitlist-form { margin-top: 1rem; }

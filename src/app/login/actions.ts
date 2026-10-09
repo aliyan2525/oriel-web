@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { z } from "zod";
 import { site } from "@/lib/site";
 import { createClient } from "@/lib/supabase/server";
@@ -37,4 +38,20 @@ export async function sendMagicLink(_prev: AuthState, formData: FormData): Promi
     return { status: "error", message: "We could not create your account. Please wait a minute and try again." };
   }
   return { status: "sent", message: "Check your email for a sign-in link." };
+}
+
+/** Starts Google sign-in. Supabase handles the OAuth exchange; the callback route finishes the session. */
+export async function signInWithGoogle(formData: FormData) {
+  const next = String(formData.get("next") ?? "/app");
+  const safeNext = next.startsWith("/") && !next.startsWith("//") ? next : "/app";
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${site.url}/auth/callback?next=${encodeURIComponent(safeNext)}`,
+      skipBrowserRedirect: true,
+    },
+  });
+  if (error || !data.url) redirect("/login?error=google");
+  redirect(data.url);
 }
