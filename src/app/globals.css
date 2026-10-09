@@ -396,3 +396,7 @@ body:has(.app-shell) { padding-bottom: env(safe-area-inset-bottom, 0px); }
 .app-select { min-height: 44px; padding: 0.5rem 0.75rem; font: inherit; font-size: 1rem; color: var(--graphite); background: var(--white); border: 1px solid var(--lilac); border-radius: var(--radius-control); }
 .invite { font-size: 0.9375rem; }
 .invite code { overflow-wrap: anywhere; color: var(--night); }
+
+/* Sign-in and sign-up in the mobile bar */
+.mobile-cta-row { display: flex; gap: 0.5rem; }
+.mobile-cta-row .button { flex: 1 1 0; }

@@ -1,11 +1,11 @@
 "use client";
 
 import { useActionState } from "react";
-import { sendMagicLink, type LoginState } from "./actions";
+import { type AuthState, sendMagicLink } from "./actions";
 
-const initialState: LoginState = { status: "idle" };
+const initialState: AuthState = { status: "idle" };
 
-export function LoginForm({ next }: { next: string }) {
+export function AuthForm({ next, mode }: { next: string; mode: "signin" | "signup" }) {
   const [state, formAction, isPending] = useActionState(sendMagicLink, initialState);
 
   if (state.status === "sent") {
@@ -19,12 +19,13 @@ export function LoginForm({ next }: { next: string }) {
   return (
     <form action={formAction} className="waitlist-form">
       <input type="hidden" name="next" value={next} />
+      <input type="hidden" name="mode" value={mode} />
       <label className="field">
         <span>Email</span>
         <input name="email" type="email" required inputMode="email" autoComplete="email" enterKeyHint="send" maxLength={254} />
       </label>
       <button className="button button-primary" type="submit" disabled={isPending}>
-        {isPending ? "Sending..." : "Email me a sign-in link"}
+        {isPending ? "Sending..." : mode === "signup" ? "Create my account" : "Email me a sign-in link"}
       </button>
       {state.status === "error" && (
         <p className="form-error" role="alert">

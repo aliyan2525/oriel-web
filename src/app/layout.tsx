@@ -44,9 +44,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <main id="main">{children}</main>
         <SiteFooter />
         <div className="mobile-cta">
-          <Link href="/join" className="button button-primary">
-            Join the waitlist
-          </Link>
+          <div className="mobile-cta-row">
+            <Link href="/login" className="button button-secondary">
+              Sign in
+            </Link>
+            <Link href="/signup" className="button button-primary">
+              Sign up
+            </Link>
+          </div>
         </div>
       </body>
     </html>

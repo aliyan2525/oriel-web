@@ -22,8 +22,11 @@ export function SiteHeader() {
         </nav>
 
         <div className="nav-actions">
-          <Link href="/join" className="button button-primary">
-            Join the waitlist
+          <Link href="/login" className="button button-secondary">
+            Sign in
+          </Link>
+          <Link href="/signup" className="button button-primary">
+            Sign up
           </Link>
         </div>
 
@@ -36,8 +39,11 @@ export function SiteHeader() {
                   <Link href={link.href}>{link.label}</Link>
                 </li>
               ))}
+              <li>
+                <Link href="/login">Sign in</Link>
+              </li>
               <li className="menu-cta">
-                <Link href="/join">Join the waitlist</Link>
+                <Link href="/signup">Sign up</Link>
               </li>
             </ul>
           </nav>

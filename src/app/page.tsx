@@ -3,7 +3,6 @@ import { HeroArt } from "@/components/hero-art";
 import { Reveal } from "@/components/reveal";
 import { Story } from "@/components/story";
 import { ScrollWords, Words } from "@/components/words";
-import { WaitlistForm } from "@/components/waitlist-form";
 
 const scopes = [
   { name: "Sara", scope: "Availability", on: true },
@@ -38,8 +37,8 @@ export default function HomePage() {
             <Reveal delay={450}>
               <p className="lead">Oriel makes plans with the people you trust, and asks you before anything happens.</p>
               <div className="cta-row">
-                <Link className="button button-primary" href="/join">
-                  Join the waitlist
+                <Link className="button button-primary" href="/signup">
+                  Sign up
                 </Link>
                 <Link className="button button-secondary" href="/features">
                   Explore features
@@ -132,8 +131,8 @@ export default function HomePage() {
             <ScrollWords text="Plans, not messages." />
           </h2>
           <Reveal delay={120}>
-            <p className="chapter-body">Join the waitlist, and we will invite groups in small batches.</p>
-            <WaitlistForm compact />
+            <p className="chapter-body">Sign up, and we will invite groups in small batches.</p>
+            <div className="cta-row"><Link className="button button-primary" href="/signup">Sign up</Link><Link className="button button-secondary" href="/login">Sign in</Link></div>
           </Reveal>
         </div>
       </section>

@@ -66,7 +66,7 @@ export const pages: ContentPage[] = [
         ],
       },
     ],
-    cta: { headline: "Ready to plan without the group chat?", label: "Join the waitlist", href: "/join" },
+    cta: { headline: "Ready to plan without the group chat?", label: "Sign up", href: "/signup" },
   },
   {
     slug: "privacy-and-trust",
@@ -95,7 +95,7 @@ export const pages: ContentPage[] = [
         ],
       },
     ],
-    cta: { headline: "Want in on the first pilot groups?", label: "Join the waitlist", href: "/join" },
+    cta: { headline: "Want in on the first pilot groups?", label: "Sign up", href: "/signup" },
   },
   {
     slug: "pricing",
@@ -112,16 +112,16 @@ export const pages: ContentPage[] = [
             price: "$0",
             body: "Try Oriel with a small group.",
             features: ["Personal agent and memory", "Up to two friend connections", "One active group plan"],
-            cta: "Join the waitlist",
-            href: "/join",
+            cta: "Sign up",
+            href: "/signup",
           },
           {
             name: "Plus",
             price: "$5 / month",
             body: "For friend groups that plan every week.",
             features: ["Unlimited friend connections", "Unlimited group plans", "Longer memory and priority support"],
-            cta: "Join the waitlist",
-            href: "/join",
+            cta: "Sign up",
+            href: "/signup",
             featured: true,
           },
         ],
@@ -176,7 +176,7 @@ export const pages: ContentPage[] = [
         ],
       },
     ],
-    cta: { headline: "See it working before everyone else does.", label: "Join the waitlist", href: "/join" },
+    cta: { headline: "See it working before everyone else does.", label: "Sign up", href: "/signup" },
   },
 ];
 
