@@ -25,10 +25,10 @@ export type DecisionInput = {
   trigger: Trigger;
   paused: boolean;
   hasPayerKey: boolean;
-  /** Cents left under the room's monthly cap. Null means no cap. */
-  capRemainingCents: number | null;
-  /** Upper bound on what the next turn can cost, in cents. */
-  estimatedTurnCents: number;
+  /** Tokens left under the room's monthly cap. Null means no cap. */
+  capRemainingTokens: number | null;
+  /** Upper bound on tokens the next turn can use: prompt plus reply. */
+  estimatedTurnTokens: number;
   repliesInLastMinute: number;
   rateLimitPerMinute: number;
   threadAgentTurns: number;
@@ -38,7 +38,7 @@ export type DecisionInput = {
 const NOTICE_TEXT: Record<NoticeReason, string> = {
   no_billing_key: "This agent has no key to run on. Its owner can add one in agent settings.",
   turn_limit: "This thread has reached its agent turn limit.",
-  cap_reached: "This room has reached its monthly cap, so agents are paused until next month.",
+  cap_reached: "This room has used its monthly token cap, so agents pause until next month.",
 };
 
 function notice(reason: NoticeReason): Decision {
@@ -54,7 +54,7 @@ export function decide(input: DecisionInput): Decision {
   if (input.trigger === "room_message") return { kind: "silent", reason: "not_addressed" };
   if (!input.hasPayerKey) return notice("no_billing_key");
   if (input.threadAgentTurns >= input.maxThreadAgentTurns) return notice("turn_limit");
-  if (input.capRemainingCents !== null && input.capRemainingCents < input.estimatedTurnCents) {
+  if (input.capRemainingTokens !== null && input.capRemainingTokens < input.estimatedTurnTokens) {
     return notice("cap_reached");
   }
   if (input.repliesInLastMinute >= input.rateLimitPerMinute) {

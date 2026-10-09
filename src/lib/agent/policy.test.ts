@@ -5,8 +5,8 @@ const addressed: DecisionInput = {
   trigger: "mention",
   paused: false,
   hasPayerKey: true,
-  capRemainingCents: null,
-  estimatedTurnCents: 2,
+  capRemainingTokens: null,
+  estimatedTurnTokens: 2,
   repliesInLastMinute: 0,
   rateLimitPerMinute: 3,
   threadAgentTurns: 0,
@@ -47,12 +47,12 @@ describe("decide: when an agent responds", () => {
   });
 
   it("stops when the cap cannot cover the next turn", () => {
-    const result = decide({ ...addressed, capRemainingCents: 1, estimatedTurnCents: 2 });
+    const result = decide({ ...addressed, capRemainingTokens: 1, estimatedTurnTokens: 2 });
     expect(result).toMatchObject({ kind: "notice", reason: "cap_reached" });
   });
 
   it("allows a turn that lands exactly on the cap", () => {
-    expect(decide({ ...addressed, capRemainingCents: 2, estimatedTurnCents: 2 })).toEqual({
+    expect(decide({ ...addressed, capRemainingTokens: 2, estimatedTurnTokens: 2 })).toEqual({
       kind: "respond",
     });
   });

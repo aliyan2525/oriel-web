@@ -131,7 +131,7 @@ export default function HomePage() {
             <ScrollWords text="Plans, not messages." />
           </h2>
           <Reveal delay={120}>
-            <p className="chapter-body">Sign up, and we will invite groups in small batches.</p>
+            <p className="chapter-body">Create an account, then invite your friends with a link.</p>
             <div className="cta-row"><Link className="button button-primary" href="/signup">Sign up</Link><Link className="button button-secondary" href="/login">Sign in</Link></div>
           </Reveal>
         </div>
