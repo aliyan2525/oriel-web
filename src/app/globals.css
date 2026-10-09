@@ -400,3 +400,11 @@ body:has(.app-shell) { padding-bottom: env(safe-area-inset-bottom, 0px); }
 /* Sign-in and sign-up in the mobile bar */
 .mobile-cta-row { display: flex; gap: 0.5rem; }
 .mobile-cta-row .button { flex: 1 1 0; }
+
+/* Runtime UI */
+.check { display: flex; gap: 0.5rem; align-items: flex-start; font-size: 0.9375rem; color: var(--night); }
+.check input { margin-top: 0.25rem; width: 1.125rem; height: 1.125rem; accent-color: var(--indigo); }
+.cap-form { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.cap-form .app-select { flex: 1 1 10rem; }
+.settings-form { max-width: 36rem; }
+.room-layout textarea { width: 100%; padding: 0.625rem 0.875rem; font: inherit; font-size: 1rem; color: var(--graphite); background: var(--white); border: 1px solid var(--lilac); border-radius: var(--radius-control); }

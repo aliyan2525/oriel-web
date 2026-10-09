@@ -27,6 +27,9 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
         <Link href="/app" className="logo">
           oriel
         </Link>
+        <nav className="app-nav" aria-label="App">
+          <Link href="/app/settings" className="button button-secondary">Model keys</Link>
+        </nav>
         <form action={signOut}>
           <button className="button button-secondary" type="submit">
             Sign out
