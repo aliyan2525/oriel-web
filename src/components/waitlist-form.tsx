@@ -40,11 +40,11 @@ export function WaitlistForm({ compact = false }: { compact?: boolean }) {
         <>
           <label className="field">
             <span>Name (optional)</span>
-            <input name="name" autoComplete="name" maxLength={120} />
+            <input name="name" autoComplete="name" enterKeyHint="next" maxLength={120} />
           </label>
           <label className="field">
             <span>University (optional)</span>
-            <input name="university" maxLength={120} />
+            <input name="university" enterKeyHint="done" maxLength={120} />
           </label>
           <label className="field">
             <span>How many plans do you coordinate a week?</span>
