@@ -10,7 +10,8 @@ export function SiteHeader() {
           <Mark size={32} />
           <span>oriel</span>
         </Link>
-        <nav aria-label="Primary">
+
+        <nav aria-label="Primary" className="nav-desktop">
           <ul className="nav-links">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -19,11 +20,28 @@ export function SiteHeader() {
             ))}
           </ul>
         </nav>
+
         <div className="nav-actions">
           <Link href="/join" className="button button-primary">
             Join the waitlist
           </Link>
         </div>
+
+        <details className="menu">
+          <summary className="menu-toggle">Menu</summary>
+          <nav aria-label="Mobile" className="menu-panel">
+            <ul>
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+              <li className="menu-cta">
+                <Link href="/join">Join the waitlist</Link>
+              </li>
+            </ul>
+          </nav>
+        </details>
       </div>
     </header>
   );

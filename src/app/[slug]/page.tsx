@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Reveal } from "@/components/reveal";
 import { type Block, getPage, pages } from "@/content/pages";
 
 type Params = Promise<{ slug: string }>;
@@ -127,7 +128,9 @@ export default async function ContentPage({ params }: { params: Params }) {
       </section>
 
       {page.blocks.map((block, i) => (
-        <BlockView key={i} block={block} />
+        <Reveal key={i}>
+          <BlockView block={block} />
+        </Reveal>
       ))}
 
       {page.cta && (

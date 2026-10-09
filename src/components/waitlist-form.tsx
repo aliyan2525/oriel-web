@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { joinWaitlist, type JoinState } from "@/app/join/actions";
+import { ShareInvite } from "@/components/share-invite";
 
 const initialState: JoinState = { status: "idle" };
 
@@ -10,9 +11,12 @@ export function WaitlistForm({ compact = false }: { compact?: boolean }) {
 
   if (state.status === "success" || state.status === "duplicate") {
     return (
-      <p className="form-success" role="status">
-        {state.message}
-      </p>
+      <div className="success-stack">
+        <p className="form-success" role="status">
+          {state.message}
+        </p>
+        <ShareInvite />
+      </div>
     );
   }
 
@@ -23,7 +27,9 @@ export function WaitlistForm({ compact = false }: { compact?: boolean }) {
         <input
           name="email"
           type="email"
+          inputMode="email"
           autoComplete="email"
+          enterKeyHint="next"
           required
           maxLength={254}
           defaultValue={state.email}

@@ -137,6 +137,47 @@ export const pages: ContentPage[] = [
       },
     ],
   },
+  {
+    slug: "features",
+    title: "Features",
+    eyebrow: "Features",
+    headline: "Every feature, and the control you keep over it.",
+    subhead: "Oriel is built around one rule: your agent proposes, and you decide. Here is how each part works.",
+    blocks: [
+      {
+        type: "cards",
+        title: "Core features",
+        items: [
+          { title: "Personal agent", body: "Your agent remembers the details you choose to share, such as the days you prefer, the places you avoid, and your usual schedule. You can read, edit, or delete any memory, and it only draws on what a task needs." },
+          { title: "Friend connections", body: "Connect through an invite code or QR scan, so nobody can add you by username alone. Each friend gets its own scopes, such as availability only, or plans and interests. Narrowing or revoking a scope takes effect before the next message." },
+          { title: "Agent exchange", body: "Agents talk in typed messages: proposal, question, answer, or decline. Typed messages keep every exchange unambiguous. Each thread has a turn limit and a time budget, so nothing loops or runs on indefinitely." },
+          { title: "Approval inbox", body: "Anything that changes something outside Oriel, such as sending a message, confirming a booking, or accepting a plan, waits for your approval. Pending requests time out, so an old request never fires by surprise." },
+          { title: "Activity log", body: "Every agent message and tool call is recorded with the scope that allowed it, in one searchable timeline. Ask your agent what it told a friend's agent and you get the exact record, not a summary." },
+          { title: "Group plans", body: "Three to six people share one thread. The organizer sets the goal, agents propose options, and each member approves or edits. A plan is final only when everyone has approved it, and the decision is recorded." },
+        ],
+      },
+      {
+        type: "steps",
+        title: "How you stay in control",
+        items: [
+          { title: "Set the scope", body: "Choose what each friend's agent can see, one category at a time." },
+          { title: "Your agent proposes", body: "It works only inside those scopes, and the proposal shows what it used." },
+          { title: "You approve or edit", body: "Nothing outside Oriel happens without your tap." },
+          { title: "Review anytime", body: "The activity log shows every step, and you can revoke access in one tap." },
+        ],
+      },
+      {
+        type: "cards",
+        title: "Connectors and your data",
+        items: [
+          { title: "Calendar, read-only", body: "At launch, Oriel reads free and busy times. Event titles stay private unless you turn them on." },
+          { title: "Notes, read-only", body: "Your agent can read notes to understand your preferences. Any write waits for your approval." },
+          { title: "Export and delete", body: "Download everything Oriel holds, or delete your account. Deletion removes your data from active systems, and backups expire on a published schedule." },
+        ],
+      },
+    ],
+    cta: { headline: "See it working before everyone else does.", label: "Join the waitlist", href: "/join" },
+  },
 ];
 
 export function getPage(slug: string): ContentPage | undefined {
