@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { HeroArt } from "@/components/hero-art";
+import { subscribeLenis } from "@/lib/smooth-scroll";
 import { shouldRender3D } from "./gate";
 
 // The 3D code loads only in the browser, after the 2D card has painted.
@@ -44,16 +45,31 @@ export function HeroScene() {
 
   // Scroll: as the hero leaves the viewport, the window eases back and shrinks a little.
   // GSAP loads after the first paint, so it stays out of the initial JavaScript.
+  // With smooth scrolling on, ScrollTrigger updates on every Lenis frame so the two stay in step.
   useEffect(() => {
     const el = rootRef.current;
     const section = el?.closest("section");
     if (!el || !section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     let cancelled = false;
-    let revert: (() => void) | undefined;
+    let detachLenis: (() => void) | undefined;
+    let teardown: (() => void) | undefined;
+
     Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(([gsapModule, stModule]) => {
       if (cancelled) return;
       const gsap = gsapModule.default;
-      gsap.registerPlugin(stModule.ScrollTrigger);
+      const { ScrollTrigger } = stModule;
+      gsap.registerPlugin(ScrollTrigger);
+
+      const unsubscribe = subscribeLenis((lenis) => {
+        detachLenis?.();
+        detachLenis = undefined;
+        if (!lenis) return;
+        const sync = () => ScrollTrigger.update();
+        lenis.on("scroll", sync);
+        detachLenis = () => lenis.off("scroll", sync);
+      });
+
       const ctx = gsap.context(() => {
         gsap.to(el, {
           yPercent: -6,
@@ -62,11 +78,18 @@ export function HeroScene() {
           scrollTrigger: { trigger: section, start: "top top", end: "bottom top", scrub: true },
         });
       }, el);
-      revert = () => ctx.revert();
+
+      teardown = () => {
+        unsubscribe();
+        detachLenis?.();
+        ctx.revert();
+      };
     });
+
     return () => {
       cancelled = true;
-      revert?.();
+      detachLenis?.();
+      teardown?.();
     };
   }, []);
 

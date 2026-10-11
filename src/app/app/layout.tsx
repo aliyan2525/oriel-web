@@ -40,7 +40,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
   const initial = name.charAt(0).toUpperCase();
 
   return (
-    <div className="app-shell">
+    <div className="app-shell" data-lenis-prevent>
       <aside className="app-sidebar" aria-label="Sidebar">
         <Link href="/app" className="app-brand">
           <Mark size={28} />

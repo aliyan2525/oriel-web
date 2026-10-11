@@ -6,6 +6,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Effects } from "@/components/effects";
+import { SmoothScroll } from "@/components/smooth-scroll";
 import { site } from "@/lib/site";
 
 const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           Skip to content
         </a>
         <Effects />
+        <SmoothScroll />
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
