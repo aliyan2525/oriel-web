@@ -1,3 +1,7 @@
+/* Cascade order: legacy styles sit below the base reset and Tailwind utilities, so new markup
+   is never overridden by the old element rules. */
+@layer legacy, base, theme, utilities;
+
 /* Tailwind v4 without preflight: the existing base styles below stay as they are.
    shadcn/ui components use the variables mapped here, which take their values from the Oriel palette. */
 @import "tailwindcss/theme.css" layer(theme);
@@ -57,6 +61,14 @@
   --color-graphite: #2C2C2A;
 }
 
+@layer base {
+  /* Marketing-only reset. The signed-in app (body:has(.app-shell)) keeps its own styles. */
+  body:not(:has(.app-shell)) a { color: inherit; text-decoration: none; }
+  body:not(:has(.app-shell)) ul, body:not(:has(.app-shell)) ol { list-style: none; margin: 0; padding: 0; }
+  body:not(:has(.app-shell)) h1, body:not(:has(.app-shell)) h2, body:not(:has(.app-shell)) h3, body:not(:has(.app-shell)) p { margin: 0; }
+}
+
+@layer legacy {
 *,
 *::before,
 *::after {
@@ -698,6 +710,7 @@ body {
 .is-3d .hero-canvas { opacity: 1; }
 .is-3d .oriel-frame { opacity: 0; transition: opacity 0.6s ease; }
 .is-3d .oriel-glass { background: linear-gradient(170deg, rgb(255 255 255 / 0.84), rgb(238 237 254 / 0.6)); }
+}
 
 /* Lenis smooth scrolling (required rules from the Lenis docs) */
 html.lenis, html.lenis body { height: auto; }
@@ -705,3 +718,18 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
 .lenis.lenis-scrolling iframe { pointer-events: none; }
+
+/* Scroll and load reveals used by FadeIn. Defined as theme keyframes so Tailwind can reference them. */
+@theme {
+  --animate-fade-up: fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(18px); filter: blur(6px); }
+    to { opacity: 1; transform: none; filter: none; }
+  }
+}
+
+/* Page width for new components. Named to avoid Tailwind's own container utility. */
+@utility page-container {
+  width: min(100% - 2rem, 1200px);
+  margin-inline: auto;
+}

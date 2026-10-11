@@ -7,6 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Effects } from "@/components/effects";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { Button } from "@/components/ui/button";
 import { site } from "@/lib/site";
 
 const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
@@ -38,7 +39,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body>
+      <body className="bg-paper text-graphite antialiased">
         <a className="skip-link" href="#main">
           Skip to content
         </a>
@@ -49,12 +50,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <SiteFooter />
         <div className="mobile-cta">
           <div className="mobile-cta-row">
-            <Link href="/login" className="button button-secondary">
-              Sign in
-            </Link>
-            <Link href="/signup" className="button button-primary">
-              Sign up
-            </Link>
+            <Button asChild variant="outline" size="lg" className="flex-1">
+              <Link href="/login">Sign in</Link>
+            </Button>
+            <Button asChild size="lg" className="flex-1">
+              <Link href="/signup">Sign up</Link>
+            </Button>
           </div>
         </div>
       </body>
