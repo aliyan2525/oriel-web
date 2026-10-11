@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { Mark } from "./mark";
 
 /**
@@ -9,7 +9,7 @@ import { Mark } from "./mark";
  * checkpoint pulses at the bottom. Pointer tilt runs only for fine pointers, and all
  * motion is disabled under reduced motion, so touch devices get the composition at no extra cost.
  */
-export function HeroArt() {
+export function HeroArt({ scene }: { scene?: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -57,6 +57,7 @@ export function HeroArt() {
 
       <div className="oriel-tilt">
         <div className="oriel-float">
+            {scene}
           <svg className="oriel-frame" viewBox="0 0 300 380">
             <path className="frame-arch" pathLength={1} d="M-9 390 V150 A159 159 0 0 1 309 150 V390" />
             <path className="frame-sill" d="M-22 390 H322" />

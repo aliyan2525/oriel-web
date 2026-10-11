@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HeroArt } from "@/components/hero-art";
+import { HeroScene } from "@/components/hero-scene/hero-scene";
 import { Marquee } from "@/components/marquee";
 import { Reveal } from "@/components/reveal";
 import { Story } from "@/components/story";
@@ -60,7 +60,7 @@ export default function HomePage() {
             </Reveal>
           </div>
           <Reveal delay={200} className="hero-visual">
-            <HeroArt />
+            <HeroScene />
           </Reveal>
         </div>
       </section>
